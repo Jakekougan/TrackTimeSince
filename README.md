@@ -16,6 +16,10 @@ This program:
 - Time formatting with leading zeros for seconds < 10
 - Automatic rollover from seconds → minutes → hours → days
 
+## Future Features
+- Save the time and be able to reload the app and calculate the time away
+- Simple GUI
+
 ## 🚀 How to Run
 
 1. Make sure you have [.NET SDK](https://dotnet.microsoft.com/download) installed.
