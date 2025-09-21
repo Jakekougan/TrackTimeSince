@@ -2,73 +2,82 @@
 
 class TimeSince
 {
-     public static void Main(String[] args)
+    public static void Main(String[] args)
     {
         TimeSince timer = new TimeSince();
         timer.run();
 
 
     }
-    private int seconds;
-    private int minutes;
-    private int hours;
-    private int days;
+
+    private string seconds;
+    private string minutes;
+    private string hours;
+    private string days;
     private string time;
 
     TimeSince()
     {
-        this.seconds = 0;
-        this.days = 0;
-        this.minutes = 0;
-        this.hours = 0;
-        this.days = 0;
-        this.time = "0" + this.days + ":" + "0" + this.hours + ":" + "0" + this.minutes + ":" + "0" + this.seconds;
+        this.seconds = "00";
+        this.days = "00";
+        this.minutes = "00";
+        this.hours = "00";
+        this.days = "00";
+        this.time = this.days + ":" + this.hours + ":" + this.minutes + ":" + this.seconds;
+
 
     }
 
-    private string Format()
+    private string FormatTime(string time)
     {
+        int number = int.Parse(time);
+        number++;
+        if (number < 10)
+        {
+            time = "0" + number.ToString();
+        }
 
+        else
+        {
+            time = number.ToString();
+        }
+        return time;
     }
 
     public void run()
     {
-        while (this.minutes != 2)
+        while (int.Parse(this.minutes) <= 2)
         {
-            if (this.seconds < 10)
-            {
-                this.time = this.days + ":" + this.hours + ":" + this.minutes + ":" + "0" + this.seconds;
-            }
 
-            else
-            {
-                this.time = this.days + ":" + this.hours + ":" + this.minutes + ":" + this.seconds;
-            }
-
+            this.time = this.days + ":" + this.hours + ":" + this.minutes + ":" + this.seconds;
             Console.WriteLine(this.time);
-            this.seconds++;
             Thread.Sleep(1000);
 
+            this.seconds = FormatTime(this.seconds);
 
-
-            if (this.seconds > 59)
+            if (int.Parse(this.seconds) > 59)
             {
-                this.seconds = 0;
-                this.minutes++;
+                this.minutes = FormatTime(this.minutes);
+                this.seconds = "00";
             }
 
-            else if (this.minutes > 59)
+            else if (int.Parse(this.minutes) > 59)
             {
-                this.minutes = 0;
-                this.hours++;
-
+                this.hours = FormatTime(this.hours);
+                this.minutes = "00";
             }
 
-            else if (this.hours > 23)
+            else if (int.Parse(this.hours) > 23)
             {
-                this.hours = 0;
-                this.days++;
+                this.days = FormatTime(this.days);
+                this.hours = "00";
             }
+
+
+
+
+
+
         }
 
 
