@@ -1,6 +1,6 @@
 # ⏱ TimeSince
 
-A simple C# console application that simulates a timer, displaying the elapsed time in the format `days:hours:minutes:seconds`. The timer runs until 2 minutes have passed.
+A simple C# console application that simulates a timer, displaying the elapsed time in the format `days:hours:minutes:seconds`. The timer runs until 3 minutes have passed.
 
 ## 🧠 Overview
 
@@ -8,7 +8,7 @@ This program:
 - Initializes a timer starting from `0:0:0:0`
 - Updates the time every second
 - Displays the formatted time in the console
-- Stops execution after 2 minutes
+- Stops execution after 3 minutes
 
 ## 📦 Features
 
