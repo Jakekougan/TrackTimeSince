@@ -20,24 +20,32 @@ class TimeSince
 
     TimeSince()
     {
-        this.seconds = "00";
-        this.days = "00";
-        this.minutes = "00";
-        this.hours = "00";
-        this.days = "00";
+
         this.filename = "clockedTime.txt";
 
-
-        if (File.ReadAllText("clockedTime.txt") != "")
+        try
         {
-            this.time = LoadTime();
-        }
+            string lines = File.ReadAllText(this.filename);
+            string[] spans = LoadTime();
 
-        else
-        {
+            this.days = spans[0];
+            this.hours = spans[1];
+            this.minutes = spans[2];
+            this.seconds = spans[3];
+
             this.time = this.days + ":" + this.hours + ":" + this.minutes + ":" + this.seconds;
-
         }
+
+        catch (System.IO.FileNotFoundException)
+        {
+            this.seconds = "00";
+            this.days = "00";
+            this.minutes = "00";
+            this.hours = "00";
+            this.days = "00";
+            this.time = this.days + ":" + this.hours + ":" + this.minutes + ":" + this.seconds;
+        }
+
 
 
     }
@@ -63,23 +71,24 @@ class TimeSince
         File.WriteAllText(this.filename, time);
     }
 
-    private string LoadTime()
+    private string[] LoadTime()
     {
-            string loadedTime = File.ReadAllText(this.filename);
+        string loadedTime = File.ReadAllText(this.filename);
+        string[] timeSpans = loadedTime.Split(":");
 
 
 
-        return loadedTime;
+        return timeSpans;
     }
 
 
     public void run()
     {
-        while (int.Parse(this.minutes) <= 2)
+        while (true)
         {
 
             this.time = this.days + ":" + this.hours + ":" + this.minutes + ":" + this.seconds;
-            Console.WriteLine(this.time);
+            SaveTime(this.time);
             Thread.Sleep(1000);
 
             this.seconds = FormatTime(this.seconds);
@@ -108,8 +117,6 @@ class TimeSince
 
 
         }
-
-        SaveTime(this.time);
 
 
     }
