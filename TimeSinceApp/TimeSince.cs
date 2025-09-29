@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using System.IO;
+using System;
 
 class TimeSince
 {
@@ -17,6 +18,7 @@ class TimeSince
     private string days;
     private string time;
     private string filename;
+    private string date;
 
     TimeSince()
     {
@@ -25,13 +27,23 @@ class TimeSince
 
         try
         {
-            string lines = File.ReadAllText(this.filename);
-            string[] spans = LoadTime();
+            string[] lines = File.ReadAllLines(this.filename);
+
+            this.date = lines[0];
+            string time = lines[1];
+
+            Console.WriteLine(this.date);
+            Console.WriteLine(time);
+
+            string[] spans = time.Split(":");
+
+
 
             this.days = spans[0];
             this.hours = spans[1];
             this.minutes = spans[2];
             this.seconds = spans[3];
+
 
             this.time = this.days + ":" + this.hours + ":" + this.minutes + ":" + this.seconds;
         }
@@ -44,6 +56,10 @@ class TimeSince
             this.hours = "00";
             this.days = "00";
             this.time = this.days + ":" + this.hours + ":" + this.minutes + ":" + this.seconds;
+
+            DateTime now = DateTime.Now;
+
+            this.date = now.ToString();
         }
 
 
@@ -68,7 +84,9 @@ class TimeSince
 
     private void SaveTime(string time)
     {
-        File.WriteAllText(this.filename, time);
+        //DateTime today = DateTime.Now;
+        //string t = today.ToString();
+        File.WriteAllLines(this.filename, [this.date, time]);
     }
 
     private string[] LoadTime()
