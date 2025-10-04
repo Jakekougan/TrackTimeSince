@@ -16,10 +16,10 @@ This program:
 - Time formatting with leading zeros for seconds < 10
 - Automatic rollover from seconds → minutes → hours → days
 - Save the time and be able to reload it, and count up from there
+- Calculate the time away from the app and update the saved clocked time accordingly
 
 ## Future Features
 - Simple GUI
-- Calculate the time away from the app and add it to the saved clocked time
 
 ## 🚀 How to Run
 
