@@ -8,8 +8,6 @@ class TimeSince
     {
         TimeSince timer = new TimeSince();
         timer.run();
-
-
     }
 
     private string seconds;
@@ -24,16 +22,13 @@ class TimeSince
     {
 
         this.filename = "clockedTime.txt";
-
+        //Handles Cases where a running clock is detected
         try
         {
             string[] lines = File.ReadAllLines(this.filename);
 
             this.date = lines[0];
             string time = lines[1];
-
-            Console.WriteLine(this.date);
-            Console.WriteLine(time);
 
             string[] spans = time.Split(":");
 
@@ -46,8 +41,23 @@ class TimeSince
 
 
             this.time = this.days + ":" + this.hours + ":" + this.minutes + ":" + this.seconds;
+
+            this.tearDown();
+
+            string currTime = this.subtractTime();
+
+            ClockedTime correctCurr = new ClockedTime(currTime);
+
+            this.days = correctCurr.Day;
+            this.hours = correctCurr.Hour;
+            this.minutes = correctCurr.Minute;
+            this.seconds = correctCurr.Second;
+
+            this.time = this.days + ":" + this.hours + ":" + this.minutes + ":" + this.seconds;
+
         }
 
+        //If not file is found, start the clock at 0
         catch (System.IO.FileNotFoundException)
         {
             this.seconds = "00";
@@ -66,7 +76,24 @@ class TimeSince
 
     }
 
-    private string FormatTime(string time)
+    public string subtractTime()
+    {
+        TimeSpan elapsed = DateTime.Now - DateTime.Parse(this.date);
+
+        string day = FormatTime(elapsed.Days.ToString());
+        string hr = FormatTime(elapsed.Hours.ToString());
+        string min = FormatTime(elapsed.Minutes.ToString());
+        string seconds = FormatTime(elapsed.Seconds.ToString());
+
+        string newTime = day + ":" + hr + ":" + min + ":" + seconds;
+
+        return newTime;
+
+    }
+
+
+
+    private static string FormatTime(string time)
     {
         int number = int.Parse(time);
         number++;
@@ -84,19 +111,12 @@ class TimeSince
 
     private void SaveTime(string time)
     {
-        //DateTime today = DateTime.Now;
-        //string t = today.ToString();
         File.WriteAllLines(this.filename, [this.date, time]);
     }
 
-    private string[] LoadTime()
+    private void tearDown()
     {
-        string loadedTime = File.ReadAllText(this.filename);
-        string[] timeSpans = loadedTime.Split(":");
-
-
-
-        return timeSpans;
+        File.Delete(this.filename);
     }
 
 
@@ -128,17 +148,6 @@ class TimeSince
                 this.days = FormatTime(this.days);
                 this.hours = "00";
             }
-
-
-
-
-
-
         }
-
-
     }
-
 }
-
-
